@@ -1,7 +1,7 @@
-use modql::field::{FieldValue, Fields};
+use modql::field::{Fields, SeaFieldValue};
 use modql::{FromSqliteRow, FromSqliteValue};
 
-#[derive(Debug, FieldValue, FromSqliteValue)]
+#[derive(Debug, SeaFieldValue, FromSqliteValue)]
 pub enum Model {
 	Gpt3,
 	Gpt4,

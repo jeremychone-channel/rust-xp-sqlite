@@ -1,4 +1,4 @@
-use modql::field::HasFields;
+use modql::field::HasSeaFields;
 use modql::FromSqliteRow as _;
 use rusqlite::Connection;
 use sea_query::{Iden, IntoIden, Order, Query, SqliteQueryBuilder};
@@ -36,7 +36,7 @@ fn main() -> Result<()> {
 			..Default::default()
 		};
 
-		let (columns, values) = agent.not_none_fields().for_sea_insert();
+		let (columns, values) = agent.not_none_sea_fields().for_sea_insert();
 
 		let mut query = Query::insert();
 		let query = query.into_table(AgentIden::Table).columns(columns).values(values)?;
@@ -48,7 +48,7 @@ fn main() -> Result<()> {
 	let mut query = Query::select();
 	let query = query
 		.from(AgentIden::Table)
-		.columns(Agent::field_idens())
+		.columns(Agent::sea_idens())
 		.order_by(AgentIden::Id.into_iden(), Order::Asc);
 
 	// -- Execute the query with rusqlite

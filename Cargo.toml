@@ -21,7 +21,7 @@ sea-query = { version = "0.31.0-rc.4", features = ["with-json"]}
 sea-query-rusqlite = {version = "0.6.0-rc", features = ["with-json"]}
 # sea-query-rusqlite = { path = "/Users/jeremychone/_jeremy/_rust/xt/fork-sea-query/sea-query-rusqlite", features = ["with-json"]}
 rusqlite = { version = "0.31", features = ["bundled", "serde_json"] }
-modql = {version = "0.3.11-rc", features = ["with-sea-query", "with-rusqlite"] }
+modql = {version = "0.4.0-rc", features = ["with-sea-query", "with-rusqlite"] }
 # modql = { path = "/Users/jeremychone/_jeremy/_rust/utils/rust-modql", features = ["with-sea-query", "with-rusqlite"] }
 
 # -- Others
