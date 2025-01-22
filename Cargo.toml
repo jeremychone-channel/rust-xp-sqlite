@@ -9,5 +9,7 @@ unsafe_code = "forbid"
 unused = { level = "allow", priority = -1 } # For exploratory dev.
 
 [dependencies]
+rusqlite = { version = "0.33.0", features = ["bundled"] }
+tabled = "0.17"
 
 
