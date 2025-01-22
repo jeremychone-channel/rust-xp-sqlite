@@ -1,0 +1,86 @@
+# -- Base
+.*
+!.gitignore
+
+_*
+# '_' in src dir, ok.
+!**/src/**/_*
+
+*.lock
+*.lockb
+*.log
+
+# -- Rust
+target/
+# !Cargo.lock # commented by default
+!.cargo/
+
+# -- Devai
+# By default ignore all devai
+*.devai
+
+# Uncomment beow to allow commiting .devai/custom .devai
+# Only allow .devai/custom and .devai/Config.toml
+# Note: Here the starting `/` will just include the top .devai. 
+#       Remove the starting `/` to include all .devai/custom even if their in a sub dir
+# !/.devai/
+# .devai/*
+# !.devai/custom/
+# !.devai/custom/**
+# !.devai/Config.toml
+
+# -- Safety net
+
+dist/
+out/
+
+# Doc Files
+*.pdf
+*.docx
+*.xlsx
+*.pptx
+*.doc
+*.xls
+*.ppt
+*.page
+
+# Data Files
+*.db3
+*.parquet
+*.map
+*.zip
+*.gz
+*.tar
+*.tgz
+*.vsix
+
+# Videos
+*.mov
+*.mp4
+*.webm
+*.ogg
+*.avi
+
+# Images
+*.icns
+*.ico
+*.jpeg
+*.jpg
+*.png
+*.bmp
+
+# -- Nodejs
+node_modules/
+!.mocharc.yaml
+report.*.json
+
+# -- Python
+__pycache__/
+
+
+# -- others
+# Allows .env (make sure only dev info) 
+# !.env # Commented by default
+
+# Allow vscode
+# !.vscode # Commented by default
