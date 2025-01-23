@@ -19,7 +19,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 		)?;
 	}
 
-	// -- Insert `number` in `string` column
+	// -- updated
 
 	// building the cols
 	let nv_list: Vec<(String, Value)> = vec![
@@ -37,9 +37,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 	// Build the where clause
 	let sql = format!("{sql} where id = ?");
 	let person_id = Value::Integer(1);
-	values.push(&person_id as &dyn ToSql);
+	values.push(&person_id);
 
-	conn.execute(&sql, &*values)?;
+	let num_of_rows = conn.execute(&sql, &*values)?;
+	println!("number of rows updated: {num_of_rows}");
 
 	print_table(&conn, "person")?;
 
