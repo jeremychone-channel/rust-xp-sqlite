@@ -1,8 +1,7 @@
 use rusqlite::Connection;
-use xp_sqlite::db_utils::{create_schema, print_rows, print_select, print_table};
+use xp_sqlite::db_utils::{create_schema, print_rows};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-	println!("Hello, world!");
 	// -- Memory SQLite
 	let conn = Connection::open_in_memory()?;
 
@@ -40,10 +39,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ";
 
 	let mut stmt = conn.prepare(query)?;
-	let mut rows = stmt.query(&[(":org_id", &org_id)])?;
+	let rows = stmt.query(&[(":org_id", &org_id)])?;
 
 	print_rows(rows)?;
-	// print_select(&conn, query)?;
 
 	Ok(())
 }
