@@ -18,7 +18,8 @@ pub fn create_schema(conn: &Connection) -> Result<()> {
 						org_id INTEGER,
             name   TEXT NOT NULL,
 						yob    INTEGER, -- year of birth
-            data   BLOB
+            data_t TEXT,
+						data_b BLOB
         ) STRICT",
 		(), // empty list of parameters.
 	)?;

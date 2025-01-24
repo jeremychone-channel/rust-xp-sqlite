@@ -2,7 +2,6 @@ use rusqlite::Connection;
 use xp_sqlite::db_utils::print_table;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-	println!("Hello, world!");
 	// -- Memory SQLite
 	let conn = Connection::open_in_memory()?;
 

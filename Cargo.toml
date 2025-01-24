@@ -9,7 +9,11 @@ unsafe_code = "forbid"
 unused = { level = "allow", priority = -1 } # For exploratory dev.
 
 [dependencies]
-rusqlite = { version = "0.33.0", features = ["bundled"] }
+# -- Json
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# -- DB
+rusqlite = { version = "0.33.0", features = ["bundled", ] }#"serde_json"
 tabled = "0.17"
 
 
