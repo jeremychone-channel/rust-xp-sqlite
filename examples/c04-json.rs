@@ -1,6 +1,6 @@
 use rusqlite::Connection;
 use serde_json::json;
-use xp_sqlite::db_utils::{create_schema, print_table};
+use xp_sqlite::db_utils::{create_schema, print_rows};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
 	// -- Memory SQLite
@@ -15,7 +15,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 	for (name, zip) in data {
 		let data_json = json!({
 			"address": "San Francisco",
-			"zip": zip
+			"zip": zip,
+			"home_owner": false
 		});
 
 		let mut stmt = conn.prepare("INSERT INTO person (name, yob, data_t) VALUES (?1, ?2, ?3) RETURNING id")?;
@@ -34,12 +35,26 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 		(&person_1_id, &94222, true.to_string()),
 	)?;
 
-	// -- Select
-	let mut stmt = conn.prepare("SELECT person.id, person.name, person.yob FROM person WHERE yob > :yob")?;
-	let mut rows = stmt.query(&[(":yob", &1900)])?;
+	// -- Select home owner = true only
+	println!("== People owning homes:");
+	let mut stmt = conn.prepare(
+		"SELECT id, name, yob, data_t FROM person WHERE 
+		   json_extract(data_t, '$.home_owner') = :ho",
+	)?;
+	let rows = stmt.query(&[(":ho", &true)])?;
+	print_rows(rows)?;
 
-	// -- Pretty print table
-	print_table(&conn, "person")?;
+	// -- Select not home owners
+	println!("== People NOT owning homes:");
+	let mut stmt = conn.prepare(
+		"
+	SELECT * FROM person 
+		WHERE json_extract(data_t, '$.home_owner') IS NULL 
+		OR json_extract(data_t, '$.home_owner') = 0
+	",
+	)?;
+	let rows = stmt.query(())?;
+	print_rows(rows)?;
 
 	Ok(())
 }
