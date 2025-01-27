@@ -5,15 +5,16 @@ use rusqlite::Connection;
 
 pub fn create_schema(conn: &Connection) -> Result<()> {
 	conn.execute(
-		"CREATE TABLE org (
+		"CREATE TABLE IF NOT EXISTS org  (
             id    INTEGER PRIMARY KEY,
             name  TEXT NOT NULL
         ) STRICT",
 		(), // empty list of parameters.
 	)?;
+	conn.execute("DELETE FROM org", ())?;
 
 	conn.execute(
-		"CREATE TABLE person (
+		"CREATE TABLE IF NOT EXISTS person (
             id     INTEGER PRIMARY KEY,
 						org_id INTEGER,
             name   TEXT NOT NULL,
@@ -23,6 +24,7 @@ pub fn create_schema(conn: &Connection) -> Result<()> {
         ) STRICT",
 		(), // empty list of parameters.
 	)?;
+	conn.execute("DELETE FROM person", ())?;
 
 	Ok(())
 }
