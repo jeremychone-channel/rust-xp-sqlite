@@ -18,10 +18,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 	// -- Insert `number` in `string` column
 	// OK in `strict` mode
-	conn.execute("INSERT INTO person (name, yob) VALUES (?1, ?2)", ("Jen", &2000))?;
+	conn.execute(
+		"INSERT INTO   person (name, yob) 
+	          VALUES (?1, ?2)",
+		("Jen", &2000),
+	)?;
 
 	// -- Select
-	let mut stmt = conn.prepare("SELECT person.id, person.name, person.yob FROM person WHERE yob > :yob")?;
+	let select_sql = "SELECT person.id, person.name, person.yob 
+										FROM   person 
+	                  WHERE  yob > :yob";
+	let mut stmt = conn.prepare(select_sql)?;
 	let mut rows = stmt.query(&[(":yob", &1900)])?;
 
 	while let Some(row) = rows.next()? {

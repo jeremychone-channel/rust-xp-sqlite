@@ -12,14 +12,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 	// -- Insert `number` in `string` column
 	// OK in `strict` mode
 	// create the org
-	let mut stmt = conn.prepare("INSERT INTO org (name) VALUES (?1) RETURNING id")?;
+	let mut stmt = conn.prepare(
+		"INSERT INTO org (name) 
+	               VALUES (?1) RETURNING id",
+	)?;
 	let org_id = stmt.query_row(("ACME, Inc",), |r| r.get::<_, i64>(0))?;
 
 	let names = &["Jen", "Mike", "Paul", "Pierre"];
 	for (idx, name) in names.iter().enumerate() {
 		let org_id = if idx % 2 == 0 { Some(org_id) } else { None };
 		conn.execute(
-			"INSERT INTO person (name, org_id, yob) VALUES (?1, ?2, ?3)",
+			"INSERT INTO person (name, org_id, yob) 
+			             VALUES (?1, ?2, ?3)",
 			(name, &org_id, &2000),
 		)?;
 	}

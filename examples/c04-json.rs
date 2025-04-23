@@ -22,7 +22,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 		let mut stmt = conn.prepare(
 			"
 		INSERT INTO person (name, yob, data_t) 
-		VALUES (?1, ?2, ?3) RETURNING id
+		            VALUES (?1, ?2, ?3) RETURNING id
 			",
 		)?;
 		let person_id = stmt.query_row((name, &2000, data_json.to_string()), |r| r.get::<_, i64>(0))?;
@@ -43,7 +43,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 	// -- Select home owner = true only
 	println!("== People owning homes:");
 	let mut stmt = conn.prepare(
-		"SELECT id, name, yob, data_t FROM person WHERE 
+		"SELECT id, name, yob, data_t 
+		   FROM person WHERE 
 		   json_extract(data_t, '$.address.home_owner') = :ho",
 	)?;
 	let rows = stmt.query(&[(":ho", &true)])?;
@@ -52,10 +53,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 	// -- Select not home owners
 	println!("== People NOT owning homes:");
 	let mut stmt = conn.prepare(
-		"
-	SELECT * FROM person 
-		WHERE json_extract(data_t, '$.address.home_owner') IS NULL 
-		OR json_extract(data_t, '$.address.home_owner') = 0
+		"SELECT * FROM person 
+		 WHERE json_extract(data_t, '$.address.home_owner') IS NULL 
+		    OR json_extract(data_t, '$.address.home_owner') = 0
 	",
 	)?;
 	let rows = stmt.query(())?;

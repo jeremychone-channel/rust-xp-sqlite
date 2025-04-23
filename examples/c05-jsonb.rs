@@ -22,7 +22,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 		let mut stmt = conn.prepare(
 			"
 		INSERT INTO person (name, yob, data_b) 
-		VALUES (?1, ?2, jsonb(?3)) RETURNING id
+		            VALUES (?1, ?2, jsonb(?3)) RETURNING id
 ",
 		)?;
 		let person_id = stmt.query_row((name, &2000, data_json.to_string()), |r| r.get::<_, i64>(0))?;
@@ -61,10 +61,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 	// Note: Using the jsonb_extract,
 	//       to get the value back (get sqlite type for primitive)
 	let mut stmt = conn.prepare(
-		"
-	SELECT name, yob, json(data_b) FROM person
-		WHERE jsonb_extract(data_b, '$.address.home_owner') IS NULL
-		OR jsonb_extract(data_b, '$.address.home_owner') = 0
+		"SELECT name, yob, json(data_b) FROM person
+		 WHERE jsonb_extract(data_b, '$.address.home_owner') IS NULL
+		    OR jsonb_extract(data_b, '$.address.home_owner') = 0
 	",
 	)?;
 	let rows = stmt.query(())?;

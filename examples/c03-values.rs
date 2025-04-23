@@ -15,7 +15,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 	for name in names.iter() {
 		let org_id: Option<i64> = None;
 		conn.execute(
-			"INSERT INTO person (name, org_id, yob) VALUES (?1, ?2, ?3)",
+			"INSERT INTO person (name, org_id, yob) 
+			             VALUES (?1, ?2, ?3)",
 			(name, &org_id, &2000),
 		)?;
 	}
