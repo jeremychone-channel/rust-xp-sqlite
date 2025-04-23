@@ -1,5 +1,6 @@
+use pretty_sqlite::print_rows;
 use rusqlite::Connection;
-use xp_sqlite::db_utils::{create_schema, print_rows};
+use xp_sqlite::db_utils::create_schema;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
 	// -- Memory SQLite

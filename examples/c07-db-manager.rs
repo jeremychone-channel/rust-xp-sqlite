@@ -1,6 +1,7 @@
+use pretty_sqlite::print_table;
 use rusqlite::Connection;
 use xp_sqlite::db::Db;
-use xp_sqlite::db_utils::{create_schema, print_table};
+use xp_sqlite::db_utils::create_schema;
 
 const DB_PATH: &str = "_my-db.db3";
 
