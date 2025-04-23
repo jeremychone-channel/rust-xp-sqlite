@@ -1,7 +1,10 @@
+#![allow(unused)] // For early development.
 use crate::Result;
 use rusqlite::types::Value;
 use rusqlite::{Connection, Params, Row, Rows, Statement};
 use std::sync::{Arc, Mutex};
+
+// IMPORTANT: This module is NOT finished. Just exploratory code at this point.
 
 #[derive(Clone)]
 pub struct Db {

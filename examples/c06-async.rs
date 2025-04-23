@@ -15,7 +15,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 	for name in names {
 		for i in 1..10 {
 			let name = format!("{name}-{i}");
-			let res = tokio::task::spawn(async move {
+			let _res = tokio::task::spawn(async move {
 				let conn = Connection::open(DB_PATH).map_err(|err| err.to_string())?;
 				conn.execute("INSERT INTO person (name, yob) VALUES (?1, ?2)", (name, &2000))
 					.map_err(|err| err.to_string())
