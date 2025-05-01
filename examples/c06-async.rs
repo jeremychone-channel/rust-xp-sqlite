@@ -17,6 +17,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 	for name in names {
 		for i in 1..10 {
 			let name = format!("{name}-{i}");
+			// NOTE: Using spawn here just to demonstrate Send/Sync restrictions.
+			//       As mentioned in the video, for production code use a DB pool, queue, or mutex
+			//       to manage concurrency.
+			// Reddit: https://www.reddit.com/r/rust/comments/1kc8xuy/comment/mq2wj0p/
 			let _res = tokio::task::spawn(async move {
 				let conn = Connection::open(DB_PATH).map_err(|err| err.to_string())?;
 				conn.execute(
