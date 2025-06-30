@@ -28,7 +28,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 		("name".to_string(), Value::Text("New name 111".to_string())),
 	];
 	let (cols, vals): (Vec<String>, Vec<Value>) = nv_list.into_iter().unzip();
-	let cols = cols.iter().map(|col| format!("\"{}\" = ?", col)).collect::<Vec<_>>().join(", ");
+	let cols = cols.iter().map(|col| format!("\"{col}\" = ?")).collect::<Vec<_>>().join(", ");
 
 	let sql = format!("UPDATE person SET {cols}");
 	let mut values: Vec<&dyn ToSql> = vals.iter().map(|x| x as &dyn ToSql).collect();

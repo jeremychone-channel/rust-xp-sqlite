@@ -1,4 +1,4 @@
-use pretty_sqlite::{print_rows, print_table};
+use pretty_sqlite::print_rows;
 use rusqlite::Connection;
 use serde_json::json;
 use xp_sqlite::db_utils::create_schema;
