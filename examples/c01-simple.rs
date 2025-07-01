@@ -5,6 +5,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 	// -- Memory SQLite
 	let conn = Connection::open_in_memory()?;
 
+	// -- Get the sqlite version
+	let version: String = conn.query_row("SELECT sqlite_version()", [], |row| row.get(0))?;
+	println!("sqlite version: {version}");
+
 	// -- Create schema
 	conn.execute(
 		"CREATE TABLE person (
